@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Contracts;
 using DataUpload;
 using Manufacturing;
@@ -11,7 +12,8 @@ namespace Application
         {
             var serializer = new Serializer();
             var streamOfAggregates = new[] { new Aggregate(new[] { new Entity(3), new Entity(4) }), new Aggregate(new[] { new Entity(8) })};
-            var uploadProcessManager = new UploadProcessManager(streamOfAggregates, serializer);
+            var streamOfAggregatePublicContracts = streamOfAggregates.Select(e => new AggregatePublicContract(e));
+            var uploadProcessManager = new UploadProcessManager(streamOfAggregatePublicContracts, serializer);
             uploadProcessManager.ProcessUpload();
         }
     }
